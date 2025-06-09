@@ -7,8 +7,6 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 
-const middlewares = require("./middlewares");
-
 const app = express();
 
 // HTTPS Redirect
@@ -27,14 +25,13 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(middlewares)
-
-app.use(express.static(path.join(__dirname, "client", "domains", ".store")));
-
+app.use(express.static(path.join(__dirname, "client", "exts")));
 
 // Catch All
 app.all("/{*any}", (req, res) => {
-	res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+	const ext = req.hostname.split(".").reverse()[0];
+
+	res.sendFile(path.join(__dirname, "client", "exts", `${ext}`, "index.html"));
 });
 
 (async () => {

@@ -1,19 +1,28 @@
-const { setAPI } = require("../api");
+const axios = require("axios");
 
 const config = require("../config");
-const axios = require("axios");
+
+const { setAPI } = require("../api");
+const data = require("../data");
 
 const init = async () => {
 	const appName = process.env.APPNAME;
 
-	// SET API
+	let app;
+
+	// GET DATA
 	try {
 		const { data } = await axios.get(`${config.gkrane}/data`);
-
-		setAPI(data.find((app) => app.name == appName).apiURL);
+		app = data.find((app) => app.name == appName);
 	} catch (error) {
 		console.log(error.message);
 	}
+	
+	// SET API
+	setAPI(app.apiURL);
+
+	// Set Data
+	data.exts = app.exts;
 };
 
 module.exports = { init };
