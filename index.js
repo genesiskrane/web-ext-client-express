@@ -3,6 +3,8 @@ require("./config");
 const { init } = require("./core");
 
 const path = require("path");
+const fs = require("fs");
+
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -31,7 +33,14 @@ app.use(express.static(path.join(__dirname, "client", "exts")));
 app.all("/{*any}", (req, res) => {
 	const ext = req.hostname.split(".").reverse()[0];
 
-	res.sendFile(path.join(__dirname, "client", "exts", `${ext}`, "index.html"));
+	const extPath = path.join(__dirname, "client", "exts", ext);
+	const indexPath = path.join(extPath, "index.html");
+
+	if (fs.existsSync(indexPath)) {
+		res.sendFile(indexPath);
+	} else {
+		res.status(404).send("Not Found");
+	}
 });
 
 (async () => {
