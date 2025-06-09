@@ -1,5 +1,7 @@
 require("./config");
 
+const { init } = require("./core");
+
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
@@ -30,6 +32,7 @@ app.all("/{*any}", (req, res) => {
 });
 
 (async () => {
+	await init();
 	app.listen(process.env.PORT, () => {
 		console.log(`Server Started @ ${process.env.PORT}`);
 	});
