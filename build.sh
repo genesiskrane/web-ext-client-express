@@ -1,15 +1,7 @@
 npm install
 
-mkdir 'client'
-
-ls
-
-
-# URL to your JSON file
-
-
 # Fetch the JSON content
-REPOS_JSON=$(curl -s "$PROD_GKRANE_URL/$APPNAME")
+REPOS_JSON = $(curl -s "$PROD_GKRANE_URL/$APPNAME")
 
 echo $REPO_JSON
 
@@ -21,3 +13,7 @@ echo $REPO_JSON
 #   echo "Cloning $REPO"
 #   git clone "$REPO"
 # done
+
+mkdir 'client'
+
+ls
