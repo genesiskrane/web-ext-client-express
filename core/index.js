@@ -12,12 +12,14 @@ const init = async () => {
 
 	// GET DATA
 	try {
-		const { data } = await axios.get(`${config.gkrane}/data`);
-		app = data.find((app) => app.name == appName);
+		const { data } = await axios.get(
+			`${config.gkrane}/krane/get-app-data?name=${appName}`
+		);
+		app = data;
 	} catch (error) {
 		console.log(error.message);
 	}
-	
+
 	// SET API
 	setAPI(app.apiURL);
 
