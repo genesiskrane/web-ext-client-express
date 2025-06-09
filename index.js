@@ -7,6 +7,8 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 
+const middlewares = require("./middlewares");
+
 const app = express();
 
 // HTTPS Redirect
@@ -24,7 +26,11 @@ app.use(cors());
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "client", "domains", ".pro")));
+
+app.use(middlewares)
+
+app.use(express.static(path.join(__dirname, "client", "domains", ".store")));
+
 
 // Catch All
 app.all("/{*any}", (req, res) => {
