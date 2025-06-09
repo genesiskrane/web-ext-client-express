@@ -1,7 +1,7 @@
 npm install
 
 # Fetch the JSON content
-REPOS_JSON=$(curl -s "$PROD_GKRANE_URL/$APPNAME")
+REPOS_JSON=$(curl -s "$PROD_GKRANE_URL/krane/get-app-data?name=$APPNAME")
 
 echo $REPOS_JSON
 
