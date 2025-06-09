@@ -1,0 +1,20 @@
+{
+  "name": "web-ext-client-express",
+  "version": "1.0.0",
+  "description": "Express Server For Extensions",
+  "homepage": "https://github.com/genesiskrane/web-ext-client-express#readme",
+  "bugs": {
+    "url": "https://github.com/genesiskrane/web-ext-client-express/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genesiskrane/web-ext-client-express.git"
+  },
+  "license": "ISC",
+  "author": "Genesis Krane",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
