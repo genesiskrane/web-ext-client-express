@@ -11,7 +11,7 @@ const init = async () => {
 
 		setAPI(data.core);
 	} catch (error) {
-		console.log(error);
+		console.log(error.message);
 	}
 };
 
