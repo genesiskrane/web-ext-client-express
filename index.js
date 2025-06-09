@@ -27,8 +27,6 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "client")));
-
 // Catch All
 app.all("/{*any}", (req, res) => {
 	const ext = req.hostname.split(".").reverse()[0];
@@ -36,11 +34,9 @@ app.all("/{*any}", (req, res) => {
 	const extPath = path.join(__dirname, "client", ext);
 	const indexPath = path.join(extPath, "dist", "index.html");
 
-	if (fs.existsSync(indexPath)) {
-		res.sendFile(indexPath);
-	} else {
-		res.status(404).send("Not Found");
-	}
+	if (fs.existsSync(indexPath))
+		express.static(path.join(__dirname, "client", ext))(req, res, next);
+	else res.status(404).send("Not Found");
 });
 
 (async () => {
