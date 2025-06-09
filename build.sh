@@ -5,7 +5,7 @@ mkdir "client"
 # Get Client Repos
 
 # Fetch the JSON content
-CLIENT_REPOS_JSON=$(curl -s -L "$PROD_GKRANE_URL/krane/get-app-data?name=$APPNAME&repos=client")
+CLIENT_REPOS_JSON=$(curl -s -L "$PROD_GKRANE_URL/krane/get-app-data?name=$APPNAME")
 
 # Loop through each client entry (with name and repo)
 echo "$CLIENT_REPOS_JSON" | jq -c '.repos.client[]' | while read -r client; do
