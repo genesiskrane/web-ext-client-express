@@ -1,5 +1,7 @@
 npm install
 
+mkdir "client"
+
 # Get Client Repos
 
 # Fetch the JSON content
@@ -7,9 +9,11 @@ CLIENT_REPOS_JSON=$(curl -s -L "$PROD_GKRANE_URL/krane/get-app-data?name=$APPNAM
 
 echo $CLIENT_REPOS_JSON
 
-REPOS=$()
+# Loop through each client entry (with name and repo)
+echo "$CLIENT_REPOS_JSON" | jq -c '.repos.client[]' | while read -r client; do
+  NAME=$(echo "$client" | jq -r '.name')
+  REPO=$(echo "$client" | jq -r '.repo')
 
-for REPO in $REPOS; do
-  echo "Cloning $REPO"
-#   git clone "$REPO"
+  echo "Cloning $REPO into client/$NAME"
+  git clone "$REPO" "client/$NAME"
 done
