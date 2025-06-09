@@ -2,14 +2,14 @@ const axios = require("axios");
 
 let instance;
 
-const setAPI = (url) => {
+const setAPI = (apiURL) => {
 	api = axios.create({
-		baseURL: `https://${url}/api`,
+		baseURL: `https://${apiURL}/api`,
 		headers: {
 			"Content-Type": "application/json",
 		},
 		timeout: 10000,
-    });
+	});
 };
 
 module.exports = { instance, setAPI };
