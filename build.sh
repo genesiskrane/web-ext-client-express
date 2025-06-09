@@ -16,7 +16,7 @@ echo "$CLIENT_REPOS_JSON" | jq -c '.repos.client[]' | while read -r client; do
 
   echo "Cloning $REPO into client/$NAME"
   git clone "$REPO" "client/$NAME"
-  cd $NAME 
+  cd client/$NAME 
   ls
 done
 
