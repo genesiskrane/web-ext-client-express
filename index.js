@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware to serve static assets based on TLD
 app.use((req, res, next) => {
-	const ext = req.hostname.split(".").reverse()[0]; // e.g., 'store' or 'pro'
+	const ext = req.hostname.split(".").reverse()[0];
 	const basePath = path.join(__dirname, "client", ext, "dist");
 
 	if (fs.existsSync(basePath)) {
@@ -39,7 +39,9 @@ app.use((req, res, next) => {
 
 app.all("/{*any}", (req, res) => {
 	const ext = req.hostname.split(".").reverse()[0];
+	console.log(ext);
 	const indexPath = path.join(__dirname, "client", ext, "dist", "index.html");
+	console.log(indexPath);
 
 	if (fs.existsSync(indexPath)) {
 		res.sendFile(indexPath);
