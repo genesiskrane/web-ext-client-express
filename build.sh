@@ -1,19 +1,15 @@
 npm install
 
+# Get Client Repos
+
 # Fetch the JSON content
-REPOS_JSON=$(curl -s -L "$PROD_GKRANE_URL/krane/get-app-data?name=$APPNAME")
+CLIENT_REPOS_JSON=$(curl -s -L "$PROD_GKRANE_URL/krane/get-app-data?name=$APPNAME&repos=client")
 
-echo $REPOS_JSON
+echo $CLIENT_REPOS_JSON
 
-# # Parse JSON and extract repo URLs using jq
-# REPOS=$(echo "$REPOS_JSON" | jq -r '.repositories[]')
+REPOS=$()
 
-# # Loop through each repo and do something (e.g., clone)
-# for REPO in $REPOS; do
-#   echo "Cloning $REPO"
+for REPO in $REPOS; do
+  echo "Cloning $REPO"
 #   git clone "$REPO"
-# done
-
-mkdir 'client'
-
-ls
+done
