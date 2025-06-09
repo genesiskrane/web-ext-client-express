@@ -1,9 +1,9 @@
 npm install
 
 # Fetch the JSON content
-REPOS_JSON = $(curl -s "$PROD_GKRANE_URL/$APPNAME")
+REPOS_JSON=$(curl -s "$PROD_GKRANE_URL/$APPNAME")
 
-echo $REPO_JSON
+echo $REPOS_JSON
 
 # # Parse JSON and extract repo URLs using jq
 # REPOS=$(echo "$REPOS_JSON" | jq -r '.repositories[]')
