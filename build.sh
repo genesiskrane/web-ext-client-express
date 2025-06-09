@@ -21,8 +21,6 @@ echo "$CLIENT_REPOS_JSON" | jq -c '.repos.client[]' | while read -r client; do
   npm install
   npx vite build
 
-  ls
-
   find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +
 
   ls
