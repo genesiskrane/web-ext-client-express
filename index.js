@@ -23,7 +23,6 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(middleware);
 
 app.use(express.static(path.join(__dirname, "client", "dist")));
 
