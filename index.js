@@ -39,9 +39,7 @@ app.use((req, res, next) => {
 
 app.all("/{*any}", (req, res) => {
 	const ext = req.hostname.split(".").reverse()[0];
-	console.log(ext);
 	const indexPath = path.join(__dirname, "client", ext, "dist", "index.html");
-	console.log(indexPath);
 
 	if (fs.existsSync(indexPath)) {
 		res.sendFile(indexPath);
