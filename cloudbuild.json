@@ -5,9 +5,9 @@
         "entrypoint": "bash",
         "args": [
           "-c",
-          "CLIENT_REPOS_JSON=$(curl -s -L \"$_PROD_GKRANE_URL/krane/get-app-data?name=$_APPNAME\") && \\
+          "_CLIENT_REPOS_JSON=$(curl -s -L \"$_PROD_GKRANE_URL/krane/get-app-data?name=$_APPNAME\") && \\
           echo Hello Kreative
-           echo \"$CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \\
+           echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \\
              NAME=$(echo \"$client\" | jq -r '.name'); \\
              echo \"Cloning $NAME into client/$NAME\"; \\
              git clone https://github.com/genesiskrane/gk-vite \"client/$NAME\"; \\
