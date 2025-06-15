@@ -23,7 +23,8 @@
     "secrets": [
         {
           "secretEnv": {
-            "MY_SECRET": "projects/YOUR_PROJECT_ID/secrets/MY_SECRET/versions/latest"
+            "NAME": "projects/800688623156/secrets/NAME/versions/latest",
+            "API": "projects/800688623156/secrets/API/versions/latest"
           }
         }
       ],
