@@ -13,8 +13,8 @@
 	"secrets": [
 		{
 			"secretEnv": {
-				"NAME": "projects/kreative-462919/secrets/NAME/versions/latest",
-				"API": "projects/kreative-462919/secrets/API/versions/latest"
+				"NAME": "projects/800688623156/secrets/NAME",
+				"API": "projects/800688623156/secrets/API"
 			}
 		}
 	],
