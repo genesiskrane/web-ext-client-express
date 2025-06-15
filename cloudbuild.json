@@ -3,7 +3,6 @@
 		{
 			"name": "gcr.io/cloud-builders/npm",
 			"entrypoint": "bash",
-			"secretEnv": ["NAME", "API"],
 			"args": [
 				"-c",
 				"apt-get update && apt-get install -y jq git curl && \n\
