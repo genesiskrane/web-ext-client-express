@@ -5,7 +5,7 @@
 			"entrypoint": "bash",
 			"args": [
 				"-c",
-				"apt-get update && apt-get install -y jq git curl && echo \"Using NAME: $REPO_NAME\" && echo \" && _CLIENT_REPOS_JSON=$(curl -s -L \"https://gkrane.online/krane/get-app-data?name=$REPO_NAME\") && echo \"Response: $_CLIENT_REPOS_JSON\" && echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); echo \"Cloning $_PROJECT_NAME into client/$_PROJECT_NAME\"; git clone https://github.com/genesiskrane/gk-vite \"client/$_PROJECT_NAME\"; cd \"client/$_PROJECT_NAME\"; npm install; npx vite build; find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; cd -; done"
+				"apt-get update && apt-get install -y jq git curl && echo \"Using NAME: $REPO_NAME\"  && _CLIENT_REPOS_JSON=$(curl -s -L \"https://gkrane.online/krane/get-app-data?name=$REPO_NAME\") && echo \"Response: $_CLIENT_REPOS_JSON\" && echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); echo \"Cloning $_PROJECT_NAME into client/$_PROJECT_NAME\"; git clone https://github.com/genesiskrane/gk-vite \"client/$_PROJECT_NAME\"; cd \"client/$_PROJECT_NAME\"; npm install; npx vite build; find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; cd -; done"
 			]
 		}
 	],
