@@ -6,21 +6,7 @@
 			"secretEnv": ["NAME", "API"],
 			"args": [
 				"-c",
-				"apt-get update && apt-get install -y jq git curl && \n\
-          echo \"Using NAME: $NAME\" && \n\
-          echo \"Calling API: $API/krane/get-app-data?name=$NAME\" && \n\
-          _CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && \n\
-          echo \"Response: $_CLIENT_REPOS_JSON\" && \n\
-          echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
-            PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \n\
-            echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \n\
-            git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; \n\
-            cd \"client/$PROJECT_NAME\"; \n\
-            npm install; \n\
-            npx vite build; \n\
-            find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \n\
-            cd -; \n\
-          done"
+				"apt-get update && apt-get install -y jq git curl && echo \"Using NAME: $NAME\" && echo \"Calling API: $API/krane/get-app-data?name=$NAME\" && _CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && echo \"Response: $_CLIENT_REPOS_JSON\" && echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; cd \"client/$PROJECT_NAME\"; npm install; npx vite build; find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; cd -; done"
 			]
 		}
 	],
