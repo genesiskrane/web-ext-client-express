@@ -3,33 +3,27 @@
 		{
 			"name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
 			"entrypoint": "bash",
-			"secretEnv": ["NAME", "API"],
 			"args": [
 				"-c",
 				"set -e && \n\
-  echo \"Fetched NAME: $NAME\" && \n\
-  echo \"Calling API: $API/krane/get-app-data?name=$NAME\" && \n\
-  _CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && \n\
+  echo 'Fetching secrets...' && \n\
+  SECRET_NAME=$(gcloud secrets versions access latest --secret=NAME) && \n\
+  SECRET_API=$(gcloud secrets versions access latest --secret=API) && \n\
+  echo \"Fetched NAME: $_SECRET_NAME\" && \n\
+  echo \"Calling API: $_SECRET_API/krane/get-app-data?name=$_SECRET_NAME\" && \n\
+  _CLIENT_REPOS_JSON=$(curl -s -L \"$_SECRET_API/krane/get-app-data?name=$_SECRET_NAME\") && \n\
   echo \"Response: $_CLIENT_REPOS_JSON\" && \n\
   echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
     PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \n\
-    echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \n\
-    git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; \n\
-    cd \"client/$PROJECT_NAME\"; \n\
+    echo \"Cloning $_PROJECT_NAME into client/$_PROJECT_NAME\"; \n\
+    git clone https://github.com/genesiskrane/gk-vite \"client/$_PROJECT_NAME\"; \n\
+    cd \"client/$_PROJECT_NAME\"; \n\
     npm install; \n\
     npx vite build; \n\
     find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \n\
     cd -; \n\
   done"
 			]
-		}
-	],
-	"secrets": [
-		{
-			"secretEnv": {
-				"NAME": "projects/kreative-462919/secrets/NAME/versions/latest",
-				"API": "projects/kreative-462919/secrets/API/versions/latest"
-			}
 		}
 	],
 	"options": {
