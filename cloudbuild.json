@@ -1,28 +1,35 @@
 {
 	"steps": [
 		{
-            "name": "node:20-bullseye", 
+			"name": "node:20-bullseye",
 			"entrypoint": "bash",
+			"secretEnv": ["NAME", "API"],
 			"args": [
 				"-c",
 				"apt-get update && apt-get install -y jq git curl && \n\
-                NAME=$(gcloud secrets versions access latest --secret=NAME) && \n\
-                API=$(gcloud secrets versions access latest --secret=API) && \n\
-               echo 'Fetching secrets...' && \n\
-               echo \"NAME=$_NAME\" && echo \"API=$_API\" && \n\
-               _CLIENT_REPOS_JSON=$(curl -s -L \"$_API/krane/get-app-data?name=$_NAME\") && \n\
-               echo \"Response: $_CLIENT_REPOS_JSON\" && \n\
-               echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
-                 PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \n\
-                 echo \"Cloning $_PROJECT_NAME into client/$_PROJECT_NAME\"; \n\
-                 git clone https://github.com/genesiskrane/gk-vite \"client/$_PROJECT_NAME\"; \n\
-                 cd \"client/$_PROJECT_NAME\"; \n\
-                 npm install; \n\
-                 npx vite build; \n\
-                 find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \n\
-                 cd -; \n\
-               done"
+          echo \"Using NAME: $NAME\" && \n\
+          echo \"Calling API: $API/krane/get-app-data?name=$NAME\" && \n\
+          _CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && \n\
+          echo \"Response: $_CLIENT_REPOS_JSON\" && \n\
+          echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
+            PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \n\
+            echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \n\
+            git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; \n\
+            cd \"client/$PROJECT_NAME\"; \n\
+            npm install; \n\
+            npx vite build; \n\
+            find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \n\
+            cd -; \n\
+          done"
 			]
+		}
+	],
+	"secrets": [
+		{
+			"secretEnv": {
+				"NAME": "projects/kreative-462919/secrets/NAME/versions/latest",
+				"API": "projects/kreative-462919/secrets/API/versions/latest"
+			}
 		}
 	],
 	"options": {
