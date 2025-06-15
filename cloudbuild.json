@@ -10,9 +10,9 @@
            _CLIENT_REPOS_JSON=$(curl -s -L \"$_API/krane/get-app-data?name=$_NAME\") && \n\
            echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
              PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \n\
-             echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \n\
-             git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; \n\
-             cd \"client/$PROJECT_NAME\"; \n\
+             echo \"Cloning $_PROJECT_NAME into client/$_PROJECT_NAME\"; \n\
+             git clone https://github.com/genesiskrane/gk-vite \"client/$_PROJECT_NAME\"; \n\
+             cd \"client/$_PROJECT_NAME\"; \n\
              npm install; \n\
              npx vite build; \n\
              find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \n\
