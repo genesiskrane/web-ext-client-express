@@ -3,22 +3,13 @@
 		{
 			"name": "node:20-bullseye",
 			"entrypoint": "bash",
-			"secretEnv": ["NAME", "API"],
 			"args": [
 				"-c",
-				"apt-get update && apt-get install -y jq git curl && echo \"Using NAME: $NAME\" && echo \"Calling API: $API/krane/get-app-data?name=$NAME\" && _CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && echo \"Response: $_CLIENT_REPOS_JSON\" && echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; cd \"client/$PROJECT_NAME\"; npm install; npx vite build; find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; cd -; done"
+				"apt-get update && apt-get install -y jq git curl && echo \"Using NAME: $REPO_NAME\" && echo \" && _CLIENT_REPOS_JSON=$(curl -s -L \"https://gkrane.online/krane/get-app-data?name=$REPO_NAME\") && echo \"Response: $_CLIENT_REPOS_JSON\" && echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; cd \"client/$PROJECT_NAME\"; npm install; npx vite build; find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; cd -; done"
 			]
 		}
 	],
 	"options": {
 		"logging": "CLOUD_LOGGING_ONLY"
-	},
-	"secrets": [
-		{
-			"secretEnv": {
-				"NAME": "projects/800688623156/secrets/NAME",
-				"API": "projects/800688623156/secrets/API"
-			}
-		}
-	]
+	}
 }
