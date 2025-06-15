@@ -1,31 +1,24 @@
 {
 	"steps": [
 		{
-			"name": "gcr.io/cloud-builders/curl",
+			"name": "gcr.io/google.com/cloudsdktool/cloud-sdk",
 			"entrypoint": "bash",
 			"args": [
 				"-c",
-				"_CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && \\\n\
-  echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \\\n\
-    PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \\\n\
-    echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \\\n\
-    git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; \\\n\
-    cd \"client/$PROJECT_NAME\"; \\\n\
-    npm install; \\\n\
-    npx vite build; \\\n\
-    find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \\\n\
-    cd -; \\\n\
-  done"
-			],
-			"secretEnv": ["NAME", "API"]
-		}
-	],
-	"secrets": [
-		{
-			"secretEnv": {
-				"NAME": "projects/800688623156/secrets/NAME/versions/latest",
-				"API": "projects/800688623156/secrets/API/versions/latest"
-			}
+				"NAME=$(gcloud secrets versions access latest --secret=NAME) && \n\
+           API=$(gcloud secrets versions access latest --secret=API) && \n\
+           _CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && \n\
+           echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
+             PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \n\
+             echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \n\
+             git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; \n\
+             cd \"client/$PROJECT_NAME\"; \n\
+             npm install; \n\
+             npx vite build; \n\
+             find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \n\
+             cd -; \n\
+           done"
+			]
 		}
 	],
 	"options": {
