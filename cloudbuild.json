@@ -7,7 +7,7 @@
 				"-c",
 				"NAME=$(gcloud secrets versions access latest --secret=NAME) && \n\
            API=$(gcloud secrets versions access latest --secret=API) && \n\
-           _CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && \n\
+           _CLIENT_REPOS_JSON=$(curl -s -L \"$_API/krane/get-app-data?name=$_NAME\") && \n\
            echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
              PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \n\
              echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \n\
