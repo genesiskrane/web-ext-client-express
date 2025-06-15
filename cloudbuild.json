@@ -24,6 +24,14 @@
 			]
 		}
 	],
+	"secrets": [
+		{
+			"secretEnv": {
+				"NAME": "projects/kreative-462919/secrets/NAME/versions/latest",
+				"API": "projects/kreative-462919/secrets/API/versions/latest"
+			}
+		}
+	],
 	"options": {
 		"logging": "CLOUD_LOGGING_ONLY"
 	}
