@@ -5,21 +5,28 @@
         "entrypoint": "bash",
         "args": [
           "-c",
-          "_CLIENT_REPOS_JSON=$(curl -s -L \"$_PROD_GKRANE_URL/krane/get-app-data?name=$_APPNAME\") && \\
-          echo Hello Kreative
+          "_CLIENT_REPOS_JSON=$(curl -s -L \"$API/krane/get-app-data?name=$NAME\") && \\
            echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \\
-             NAME=$(echo \"$client\" | jq -r '.name'); \\
-             echo \"Cloning $NAME into client/$NAME\"; \\
-             git clone https://github.com/genesiskrane/gk-vite \"client/$NAME\"; \\
-             cd \"client/$NAME\"; \\
+             PROJECT_NAME=$(echo \"$client\" | jq -r '.name'); \\
+             echo \"Cloning $PROJECT_NAME into client/$PROJECT_NAME\"; \\
+             git clone https://github.com/genesiskrane/gk-vite \"client/$PROJECT_NAME\"; \\
+             cd \"client/$PROJECT_NAME\"; \\
              npm install; \\
              npx vite build; \\
              find . -mindepth 1 ! -name 'dist' ! -path './dist/*' -exec rm -rf {} +; \\
              cd -; \\
            done"
-        ]
+        ],
+        "secretEnv": ["NAME", "API"]
       }
     ],
+    "secrets": [
+        {
+          "secretEnv": {
+            "MY_SECRET": "projects/YOUR_PROJECT_ID/secrets/MY_SECRET/versions/latest"
+          }
+        }
+      ],
     "options": {
         "logging": "CLOUD_LOGGING_ONLY"
     },
