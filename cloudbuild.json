@@ -7,10 +7,10 @@
 				"-c",
 				"set -e && \n\
   echo 'Fetching secrets...' && \n\
-  NAME=$(gcloud secrets versions access latest --secret=NAME) && \n\
-  API=$(gcloud secrets versions access latest --secret=API) && \n\
-  echo \"Fetched NAME: $NAME\" && \n\
-  echo \"Calling API: $_API/krane/get-app-data?name=$_NAME\" && \n\
+  SECRET_NAME=$(gcloud secrets versions access latest --secret=NAME) && \n\
+  SECRET_API=$(gcloud secrets versions access latest --secret=API) && \n\
+  echo \"Fetched NAME: $SECRET_NAME\" && \n\
+  echo \"Calling API: $SECRET_API/krane/get-app-data?name=$_NAME\" && \n\
   _CLIENT_REPOS_JSON=$(curl -s -L \"$_API/krane/get-app-data?name=$_NAME\") && \n\
   echo \"Response: $_CLIENT_REPOS_JSON\" && \n\
   echo \"$_CLIENT_REPOS_JSON\" | jq -c '.repos.client[]' | while read -r client; do \n\
